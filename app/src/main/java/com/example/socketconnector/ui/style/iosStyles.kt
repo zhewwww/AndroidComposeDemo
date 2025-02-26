@@ -22,7 +22,7 @@ object IOSStyles {
     val BackgroundColor = Color(0xFFF2F2F7)
     private val PrimaryColor = Color(0xFF007AFF)
     private val DisabledColor = Color(0xFFE5E5EA)
-    val SecondaryTextColor = Color(0xFF8E8E93)
+    val SecondaryTextColor = Color(0xFFAAAAAB)
     private val White = Color.White
 
     // SingleChoiceSegmentedButtonRow Modifier

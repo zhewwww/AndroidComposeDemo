@@ -9,6 +9,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -54,7 +55,7 @@ fun SocketApp() {
                     .fillMaxWidth()
                     .height(50.dp),
                 shape = RoundedCornerShape(35.dp),
-                color = IOSStyles.SecondaryTextColor, // 背景色与外部保持一致
+                color = IOSStyles.SecondaryTextColor, // 背景色为半透明淡灰色
             ) {
                 Row(
                     modifier = Modifier
@@ -72,19 +73,20 @@ fun SocketApp() {
                             shape = RoundedCornerShape(20.dp), // 保持圆角矩形
                             colors = ButtonDefaults.elevatedButtonColors(
                                 containerColor = if (selectedOption == label)
-                                    MaterialTheme.colorScheme.primary
+                                    IOSStyles.BackgroundColor
                                 else IOSStyles.SecondaryTextColor,
                                 contentColor = if (selectedOption == label)
-                                    MaterialTheme.colorScheme.onPrimary
+                                    Color.Black
                                 else MaterialTheme.colorScheme.onSurface
                             ),
                             elevation = ButtonDefaults.elevatedButtonElevation(
-                                defaultElevation = if (selectedOption == label) 5.dp else 0.dp
+                                defaultElevation = if (selectedOption == label) 8.dp else 0.dp
                             )
                         ) {
                             Text(
                                 text = label,
                                 style = MaterialTheme.typography.labelLarge
+
                             )
                         }
                     }
