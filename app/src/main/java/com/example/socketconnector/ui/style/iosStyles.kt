@@ -22,8 +22,16 @@ object IOSStyles {
     val BackgroundColor = Color(0xFFF2F2F7)
     private val PrimaryColor = Color(0xFF007AFF)
     private val DisabledColor = Color(0xFFE5E5EA)
-    private val SecondaryTextColor = Color(0xFF8E8E93)
+    val SecondaryTextColor = Color(0xFF8E8E93)
     private val White = Color.White
+
+    // SingleChoiceSegmentedButtonRow Modifier
+    fun segmentedButtonRowModifier() = Modifier
+        .fillMaxWidth()
+
+    // segmentedButton Modifier
+    fun segmentedButtonModifier() = Modifier
+        .height(20.dp)
 
 
     // Text Field Modifier
@@ -58,7 +66,7 @@ object IOSStyles {
 
     // Button Modifier
     fun buttonModifier() = Modifier
-        .height(50.dp)
+        .height(40.dp)
 
     // Button Colors
     @Composable

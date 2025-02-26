@@ -29,11 +29,13 @@ class MainActivity : ComponentActivity() {
 @Preview
 @Composable
 fun SocketApp() {
-    var ipAddress by remember { mutableStateOf(TextFieldValue("192.168.1.1")) }
-    var port by remember { mutableStateOf(TextFieldValue("8080")) }
+    var ipAddress by remember { mutableStateOf(TextFieldValue("192.168.43.56")) }
+    var port by remember { mutableStateOf(TextFieldValue("80")) }
     var connectionStatus by remember { mutableStateOf("未连接") }
     var socket by remember { mutableStateOf<Socket?>(null) }
     val scope = rememberCoroutineScope()
+    var selectedOption by remember { mutableStateOf("Connect") }
+    val options = listOf("Connect", "Message")
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -46,18 +48,48 @@ fun SocketApp() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
-            SingleChoiceSegmentedButtonRow {
-                // Handle selection change
-
+            // 自定义带槽效果的 Segmented Button
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp),
+                shape = RoundedCornerShape(35.dp),
+                color = IOSStyles.SecondaryTextColor, // 背景色与外部保持一致
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp), // 内部 padding 创建槽的深度感
+                    horizontalArrangement = Arrangement.SpaceEvenly // 按钮均匀分布
+                ) {
+                    options.forEach { label ->
+                        Button(
+                            onClick = { selectedOption = label },
+                            modifier = Modifier
+                                .weight(1f) // 每个按钮等宽
+                                .padding(horizontal = 4.dp) // 按钮之间的间隔
+                                .height(34.dp), // 控制按钮高度
+                            shape = RoundedCornerShape(20.dp), // 保持圆角矩形
+                            colors = ButtonDefaults.elevatedButtonColors(
+                                containerColor = if (selectedOption == label)
+                                    MaterialTheme.colorScheme.primary
+                                else IOSStyles.SecondaryTextColor,
+                                contentColor = if (selectedOption == label)
+                                    MaterialTheme.colorScheme.onPrimary
+                                else MaterialTheme.colorScheme.onSurface
+                            ),
+                            elevation = ButtonDefaults.elevatedButtonElevation(
+                                defaultElevation = if (selectedOption == label) 5.dp else 0.dp
+                            )
+                        ) {
+                            Text(
+                                text = label,
+                                style = MaterialTheme.typography.labelLarge
+                            )
+                        }
+                    }
+                }
             }
-        }
-        Column(
-            modifier = Modifier
-                .padding(20.dp)
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(20.dp)
-        ) {
             TextField(
                 value = ipAddress,
                 onValueChange = { ipAddress = it },
@@ -104,7 +136,7 @@ fun SocketApp() {
                     },
                     enabled = socket == null,
                     modifier = IOSStyles.buttonModifier(),
-                    shape = RoundedCornerShape(12.dp),
+                    shape = RoundedCornerShape(20.dp),
                     colors = IOSStyles.buttonColors(),
                 ) {
                     Text("连接", style = IOSStyles.buttonTextStyle())
@@ -124,9 +156,8 @@ fun SocketApp() {
                     },
                     enabled = socket != null,
                     modifier = IOSStyles.buttonModifier(),
-                    shape = RoundedCornerShape(12.dp),
+                    shape = RoundedCornerShape(20.dp),
                     colors = IOSStyles.buttonColors(),
-                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp)
                 ) {
                     Text("断开", style = IOSStyles.buttonTextStyle())
                 }
